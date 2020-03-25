@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="container">
+    <h1 class="text-center">Star Wars Characters</h1>
+    {% if charList %}
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border mainLoading d-none" role="status"><span class="sr-only"></span></div>
+        </div>
+        <div class="list-group" id="charListContainer">
+            {% for id, name in charList %}
+                <a class="list-group-item list-group-item-action character" data-toggle="collapse" data-target="#charDetail-{{ id }}" data-id="{{ id }}" href="#" role="button" aria-expanded="false" aria-controls="charDetail-{{ id }}">
+                    {{ name }}
+                </a>
+                <div class="collapse" id="charDetail-{{ id }}">
+                    <div class="card card-body p-2">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border charLoading d-none" role="status"><span class="sr-only"></span></div>
+                        </div>
+                        <div class="charInfo"></div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-sm-6 text-center">
+                    {% if previous %}
+                        <a href="#" data-page="{{ previous }}" class="badge badge-info pageSelector">Previous </a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-6 text-center">
+                    {% if next %}
+                        <a href="#" data-page="{{ next }}" class="badge badge-info pageSelector">Next</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h2>No characters found</h2>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/handlebars/handlebars-v4.7.3.js') }}"></script>
+    <script src="{{ asset('assets/js/characters.js') }}"></script>
+{% endblock %}
